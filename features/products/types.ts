@@ -2,8 +2,6 @@ import { Integer } from "@/lib/utils";
 
 type CookieSize = 'classic' | 'jumbo'
 
-type CookieProductType = 'frozen-dough' | 'baked-cookie'
-
 type DietaryLabel =
   | 'vegan'
   | 'vegetarian'
@@ -11,22 +9,33 @@ type DietaryLabel =
 
 type Image = {
   url: string;
+};
+
+type ProductText = {
+  name: string;
+  tagline: string;
+  flavor: string;
   altText: string;
 };
 
+type Locale = 'en' | 'de';
+
 type Product = {
   id: string;
-  name: string;
   size: CookieSize;
-  productType: CookieProductType;
   allergenInfo: CookieAllergenInfo | 'unknown';
   price: Integer;
   image: Image;
   dietaryLabels?: DietaryLabel[];
-  flavor: string;
-  tagline?: string;
+  availableFrozen: boolean;
+  text: Record<Locale, ProductText>;
 };
 
+ 
+type BoxContent = { flavorCount: 1 | 2, price: Integer, count: number }
+
+
+type BoxSize = 'small' | 'medium' | 'large'
 
 
 type EUAllergen =
@@ -52,4 +61,4 @@ type CookieAllergenInfo = {
   };
 };
 
-export type { CookieSize, CookieProductType, Product }
+export type { CookieSize, Product, BoxContent, BoxSize }
