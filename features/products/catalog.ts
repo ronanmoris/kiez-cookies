@@ -48,9 +48,10 @@ export const catalog: Product[] = [
   },
   {
     id: '745db782-7df2-4fed-ab33-8ed3fa78afd0',
-    size: 'jumbo',
+    size: 'classic',
     allergenInfo: 'unknown',
-    price: toInteger(450),
+    dietaryLabels: ['vegan'],
+    price: toInteger(340),
     image: {
       url: '/images/prenzlauerberg.jpg',
     },
