@@ -1,26 +1,62 @@
 @import "tailwindcss";
 
+/* Design tokens from the prototype. Raw values here, Tailwind names in @theme below. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --paper: #fbfafc;
+  --ink: #2f2a37;
+  --muted: #6a6377;
+  --rule: #d8d1e0;
+  --lilac: #ddd3ea;
+  --mint: #d2ebe7;
+  --peach: #f6d6bd;
+  --plum: #5d546f;
+  --on-plum: #f6f2fa;
+  --btn: #2f2a37;
+  --on-btn: #fbfafc;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --paper: #1b1820;
+    --ink: #f0ebf5;
+    --muted: #b3abbf;
+    --rule: #3d3549;
+    --lilac: #352d43;
+    --mint: #203a37;
+    --peach: #4d3729;
+    --plum: #2a2435;
+    --on-plum: #f0ebf5;
+    --btn: #f0ebf5;
+    --on-btn: #1b1820;
+    color-scheme: dark;
   }
 }
 
+/* Tailwind CSS v4 theme tokens; editors without v4 support may flag this as unknown. */
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-lilac: var(--lilac);
+  --color-mint: var(--mint);
+  --color-peach: var(--peach);
+  --color-plum: var(--plum);
+  --color-on-plum: var(--on-plum);
+  --color-btn: var(--btn);
+  --color-on-btn: var(--on-btn);
+  --font-sans: var(--font-jost), "Century Gothic", "Futura", "Avenir Next", system-ui, sans-serif;
+  --font-script: var(--font-sacramento), "Snell Roundhand", "Brush Script MT", cursive;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
 }
