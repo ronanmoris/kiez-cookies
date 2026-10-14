@@ -1,4 +1,5 @@
 import { Integer } from "@/lib/utils";
+import { Locale } from "@/features/i18n/dictionaries/dictionaries";
 
 type CookieSize = 'classic' | 'jumbo'
 
@@ -17,8 +18,6 @@ type ProductText = {
   flavor: string;
   altText: string;
 };
-
-type Locale = 'en' | 'de';
 
 type Product = {
   id: string;
