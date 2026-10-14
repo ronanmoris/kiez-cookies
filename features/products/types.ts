@@ -1,5 +1,5 @@
 import { Integer } from "@/lib/utils";
-import { Locale } from "@/features/i18n/dictionaries/dictionaries";
+import type { Locale } from "@/features/i18n/locales";
 
 type CookieSize = 'classic' | 'jumbo'
 

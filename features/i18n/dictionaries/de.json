@@ -1,10 +1,61 @@
 {
+  "meta": {
+    "title": "Kiez Cookies Berlin",
+    "description": "Weiche Cookies mit saftigem Kern, gebacken von Michèle. Jede Sorte ist nach einem Berliner Kiez benannt."
+  },
   "nav": {
-    "flavors": "Sorten"
+    "label": "Bereiche",
+    "flavors": "Sorten",
+    "frozenDough": "Tiefkühlteig",
+    "order": "Bestellen",
+    "language": "Sprache"
   },
   "hero": {
+    "place": "Berlin · Prenzlauer Berg",
+    "titleBefore": "Wir verderben dir alle anderen",
+    "titleScript": "Cookies",
+    "titleAfter": "",
+    "lead": "Weiche Cookies mit saftigem Kern, gebacken von Michèle. Jede Sorte ist nach einem Berliner Kiez benannt.",
     "orderOnWhatsapp": "Per WhatsApp bestellen",
     "seeTheFlavors": "Zu den Sorten",
-    "freeDelivery": "Kostenlose Lieferung in Prenzlauer Berg"
+    "freeDelivery": "Kostenlose Lieferung in Prenzlauer Berg",
+    "imageAlt": "Ein mit Nutella gefüllter Chocolate-Chip-Cookie, aufgebrochen, die Füllung quillt heraus"
+  },
+  "flavors": {
+    "heading": "Sorten",
+    "intro": "Sechs Klassiker und zwei Jumbos, Preis pro Cookie.",
+    "placeholderPrices": "Platzhalterpreise, bis die echte Karte da ist.",
+    "allergenNotice": "Allergeninformationen sind derzeit nicht verfügbar. Wenn du eine Lebensmittelallergie hast, kontaktiere uns bitte vor deiner Bestellung."
+  },
+  "labels": {
+    "vegan": "Vegan",
+    "vegetarian": "Vegetarisch",
+    "gluten-free": "Glutenfrei"
+  },
+  "jumbo": {
+    "heading": "Jumbo-Cookies",
+    "intro": "Doppelt so groß, außen knusprig, innen weich, mit cremiger Füllung."
+  },
+  "frozen": {
+    "our": "Unser",
+    "heading": "gefrorener Cookieteig",
+    "text": "Kommt in einer Box und zieht direkt in dein Gefrierfach. Back dir ein paar, wann immer du sie warm möchtest.",
+    "from": "ab",
+    "perBox": "pro Box",
+    "placeholderPrice": "(Platzhalterpreis)",
+    "ask": "Tiefkühlteig anfragen",
+    "imageAlt": "Frisch gebackene Red-Velvet-Cookies auf Backpapier"
+  },
+  "order": {
+    "heading": "Bestellen per Nachricht",
+    "text": "Schreib uns auf WhatsApp oder Instagram, welche Sorten du möchtest. Wir bestätigen deine Bestellung und klären die Lieferung.",
+    "delivery": "Lieferung",
+    "deliveryValue": "Kostenlos in Prenzlauer Berg",
+    "where": "Wo"
+  },
+  "about": {
+    "heading": "Hi! Ich bin Michèle",
+    "text": "Mama, Bäckerin und Historikerin, verliebt in Berlin und Desserts.",
+    "imageAlt": "Michèle lächelt in ihrer Küche und hält ein Gitter mit frisch gebackenen Cookies"
   }
 }

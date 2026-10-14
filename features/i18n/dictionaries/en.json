@@ -1,10 +1,61 @@
 {
+  "meta": {
+    "title": "Kiez Cookies Berlin",
+    "description": "Soft, gooey cookies by Michèle. Every flavor is named after a Berlin Kiez."
+  },
   "nav": {
-    "flavors": "Flavors"
+    "label": "Sections",
+    "flavors": "Flavors",
+    "frozenDough": "Frozen dough",
+    "order": "Order",
+    "language": "Language"
   },
   "hero": {
+    "place": "Berlin · Prenzlauer Berg",
+    "titleBefore": "We'll ruin all other",
+    "titleScript": "cookies",
+    "titleAfter": "for you",
+    "lead": "Soft, gooey cookies by Michèle. Every flavor is named after a Berlin Kiez.",
     "orderOnWhatsapp": "Order on WhatsApp",
     "seeTheFlavors": "See the Flavors",
-    "freeDelivery": "Free delivery in Prenzlauer Berg"
+    "freeDelivery": "Free delivery in Prenzlauer Berg",
+    "imageAlt": "A Nutella stuffed chocolate chip cookie broken open, the filling spilling out"
+  },
+  "flavors": {
+    "heading": "Flavors",
+    "intro": "Six classics and two jumbos, priced per cookie.",
+    "placeholderPrices": "Placeholder prices until the real menu is in.",
+    "allergenNotice": "Allergen information is currently unavailable. If you have a food allergy, please contact us before placing your order."
+  },
+  "labels": {
+    "vegan": "Vegan",
+    "vegetarian": "Vegetarian",
+    "gluten-free": "Gluten-free"
+  },
+  "jumbo": {
+    "heading": "Jumbo cookies",
+    "intro": "Twice as big, crunchy on the outside, soft on the inside, with a creamy filling."
+  },
+  "frozen": {
+    "our": "Our",
+    "heading": "frozen cookie dough",
+    "text": "Comes in a box, ready to live in your freezer. Bake a few whenever you want them warm.",
+    "from": "from",
+    "perBox": "per box",
+    "placeholderPrice": "(placeholder price)",
+    "ask": "Ask about frozen dough",
+    "imageAlt": "Freshly baked red velvet cookies on baking paper"
+  },
+  "order": {
+    "heading": "Order by message",
+    "text": "Send us the flavors you'd like on WhatsApp or Instagram. We'll confirm your order and arrange delivery.",
+    "delivery": "Delivery",
+    "deliveryValue": "Free in Prenzlauer Berg",
+    "where": "Where"
+  },
+  "about": {
+    "heading": "Hi! I'm Michèle",
+    "text": "Mom, baker and historian, in love with Berlin and desserts.",
+    "imageAlt": "Michèle smiling in her kitchen, holding a rack of freshly baked cookies"
   }
 }
