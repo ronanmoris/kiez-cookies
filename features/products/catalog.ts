@@ -1,8 +1,7 @@
-import { toInteger } from "@/lib/utils";
-import type { BoxContent, BoxSize, CookieSize, Product } from "./types";
+import { toInteger } from '@/lib/utils';
+import type { BoxContent, BoxSize, CookieSize, Product } from './types';
 
-export const boxOptions:
-  Record<CookieSize, Record<BoxSize, BoxContent>> = {
+export const boxOptions: Record<CookieSize, Record<BoxSize, BoxContent>> = {
   classic: {
     small: { flavorCount: 1, price: toInteger(1800), count: 6 },
     medium: { flavorCount: 2, price: toInteger(2500), count: 12 },
@@ -12,9 +11,8 @@ export const boxOptions:
     small: { flavorCount: 1, price: toInteger(1800), count: 3 },
     medium: { flavorCount: 2, price: toInteger(2500), count: 6 },
     large: { flavorCount: 2, price: toInteger(3000), count: 12 },
-  }
-}
-
+  },
+};
 
 export const catalog: Product[] = [
   {
@@ -136,7 +134,8 @@ export const catalog: Product[] = [
       },
       de: {
         name: 'Schöneberg',
-        tagline: 'Auffällig und luxuriös. Leicht schokoladig, fein säuerlich, mit weißen Schokostückchen.',
+        tagline:
+          'Auffällig und luxuriös. Leicht schokoladig, fein säuerlich, mit weißen Schokostückchen.',
         flavor: 'Red Velvet',
         altText: 'Red-Velvet-Cookie mit weißen Schokostückchen',
       },
@@ -226,14 +225,16 @@ export const catalog: Product[] = [
     text: {
       en: {
         name: 'Frozen cookie dough',
-        tagline: 'Comes in a box, ready to live in your freezer. Bake a few whenever you want them warm.',
-        flavor: '',  // not in the prototype: ask Michèle which flavor the box has
+        tagline:
+          'Comes in a box, ready to live in your freezer. Bake a few whenever you want them warm.',
+        flavor: '', // not in the prototype: ask Michèle which flavor the box has
         altText: 'Freshly baked red velvet cookies on baking paper',
       },
       de: {
         name: 'Gefrorener Cookieteig',
-        tagline: 'Kommt in einer Box und zieht direkt in dein Gefrierfach. Back dir ein paar, wann immer du sie warm möchtest.',
-        flavor: '',  // not in the prototype: ask Michèle which flavor the box has
+        tagline:
+          'Kommt in einer Box und zieht direkt in dein Gefrierfach. Back dir ein paar, wann immer du sie warm möchtest.',
+        flavor: '', // not in the prototype: ask Michèle which flavor the box has
         altText: 'Frisch gebackene Red-Velvet-Cookies auf Backpapier',
       },
     },

@@ -17,9 +17,17 @@ const columns = {
 
 export function ProductGrid({ products, locale, labels, layout }: ProductGridProps) {
   return (
-    <ul className={`grid grid-cols-1 gap-x-[clamp(1.5rem,3vw,2.5rem)] gap-y-7 min-[44rem]:gap-y-11 ${columns[layout]}`}>
+    <ul
+      className={`grid grid-cols-1 gap-x-[clamp(1.5rem,3vw,2.5rem)] gap-y-7 min-[44rem]:gap-y-11 ${columns[layout]}`}
+    >
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} locale={locale} labels={labels} layout={layout} />
+        <ProductCard
+          key={product.id}
+          product={product}
+          locale={locale}
+          labels={labels}
+          layout={layout}
+        />
       ))}
     </ul>
   );

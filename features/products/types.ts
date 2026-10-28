@@ -1,12 +1,9 @@
-import type { Integer } from "@/lib/utils";
-import type { Locale } from "@/features/i18n/locales";
+import type { Integer } from '@/lib/utils';
+import type { Locale } from '@/features/i18n/locales';
 
-type CookieSize = 'classic' | 'jumbo'
+type CookieSize = 'classic' | 'jumbo';
 
-type DietaryLabel =
-  | 'vegan'
-  | 'vegetarian'
-  | 'gluten-free';
+type DietaryLabel = 'vegan' | 'vegetarian' | 'gluten-free';
 
 type Image = {
   url: string;
@@ -30,12 +27,9 @@ type Product = {
   text: Record<Locale, ProductText>;
 };
 
- 
-type BoxContent = { flavorCount: 1 | 2, price: Integer, count: number }
+type BoxContent = { flavorCount: 1 | 2; price: Integer; count: number };
 
-
-type BoxSize = 'small' | 'medium' | 'large'
-
+type BoxSize = 'small' | 'medium' | 'large';
 
 type EUAllergen =
   | 'gluten'
@@ -60,4 +54,4 @@ type CookieAllergenInfo = {
   };
 };
 
-export type { CookieSize, Product, BoxContent, BoxSize }
+export type { CookieSize, Product, BoxContent, BoxSize };

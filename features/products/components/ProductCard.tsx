@@ -13,8 +13,18 @@ type ProductCardProps = {
 
 // Photo sizes as exported for public/images: classic squares, jumbo 16:9.
 const photo = {
-  card: { width: 640, height: 640, className: 'aspect-square', sizes: '(min-width: 60rem) 22rem, (min-width: 44rem) 45vw, 6.5rem' },
-  wide: { width: 1200, height: 675, className: 'aspect-video', sizes: '(min-width: 44rem) 34rem, 100vw' },
+  card: {
+    width: 640,
+    height: 640,
+    className: 'aspect-square',
+    sizes: '(min-width: 60rem) 22rem, (min-width: 44rem) 45vw, 6.5rem',
+  },
+  wide: {
+    width: 1200,
+    height: 675,
+    className: 'aspect-video',
+    sizes: '(min-width: 44rem) 34rem, 100vw',
+  },
 };
 
 export function ProductCard({ product, locale, labels, layout }: ProductCardProps) {
@@ -38,7 +48,9 @@ export function ProductCard({ product, locale, labels, layout }: ProductCardProp
           <h3 className="min-w-0 border-l-[1.5px] border-ink pl-[0.65em] text-[0.9375rem] font-medium uppercase leading-[1.3] tracking-[0.1em] [overflow-wrap:anywhere] min-[44rem]:text-[1.0625rem] min-[44rem]:tracking-[0.16em]">
             {text.name}
           </h3>
-          <span className="whitespace-nowrap font-medium tabular-nums">{formatPrice(product.price, locale)}</span>
+          <span className="whitespace-nowrap font-medium tabular-nums">
+            {formatPrice(product.price, locale)}
+          </span>
         </div>
         <p className="mt-[0.45rem] font-medium">{text.flavor}</p>
         <p className="text-muted">{text.tagline}</p>

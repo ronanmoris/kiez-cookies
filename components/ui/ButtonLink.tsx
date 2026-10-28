@@ -13,7 +13,12 @@ type ButtonLinkProps = ComponentProps<'a'> & {
   small?: boolean;
 };
 
-export function ButtonLink({ variant = 'solid', small = false, className = '', ...props }: ButtonLinkProps) {
+export function ButtonLink({
+  variant = 'solid',
+  small = false,
+  className = '',
+  ...props
+}: ButtonLinkProps) {
   const padding = small ? 'px-[1.2em] py-[0.6em]' : 'px-[1.5em] py-[0.8em]';
   return (
     <a

@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* Design tokens from the prototype. Raw values here, Tailwind names in @theme below. */
 :root {
@@ -45,8 +45,8 @@
   --color-on-plum: var(--on-plum);
   --color-btn: var(--btn);
   --color-on-btn: var(--on-btn);
-  --font-sans: var(--font-jost), "Century Gothic", "Futura", "Avenir Next", system-ui, sans-serif;
-  --font-script: var(--font-sacramento), "Snell Roundhand", "Brush Script MT", cursive;
+  --font-sans: var(--font-jost), 'Century Gothic', 'Futura', 'Avenir Next', system-ui, sans-serif;
+  --font-script: var(--font-sacramento), 'Snell Roundhand', 'Brush Script MT', cursive;
 }
 
 body {

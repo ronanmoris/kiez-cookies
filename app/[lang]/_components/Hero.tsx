@@ -8,7 +8,9 @@ import heroPhoto from '@/public/images/hero.jpg';
 export function Hero({ dict }: { dict: Dictionary['hero'] }) {
   return (
     <section className={`${band} bg-lilac`}>
-      <div className={`${wrap} grid grid-cols-1 items-center gap-[clamp(1.5rem,5vw,4rem)] min-[44rem]:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]`}>
+      <div
+        className={`${wrap} grid grid-cols-1 items-center gap-[clamp(1.5rem,5vw,4rem)] min-[44rem]:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]`}
+      >
         <div className="grid min-w-0 justify-items-start gap-[1.4rem]">
           <p className={caps}>{dict.place}</p>
           <h1 className="text-balance text-[clamp(2rem,5.6vw,3.9rem)] font-light uppercase leading-[1.12] tracking-[0.07em]">
@@ -20,10 +22,16 @@ export function Hero({ dict }: { dict: Dictionary['hero'] }) {
           </h1>
           <p className="max-w-[30em] text-[1.1875rem]">{dict.lead}</p>
           <div className="flex flex-wrap gap-3">
-            <ButtonLink href={shop.whatsappUrl} target="_blank" rel="noopener">{dict.orderOnWhatsapp}</ButtonLink>
-            <ButtonLink href="#flavors" variant="line">{dict.seeTheFlavors}</ButtonLink>
+            <ButtonLink href={shop.whatsappUrl} target="_blank" rel="noopener">
+              {dict.orderOnWhatsapp}
+            </ButtonLink>
+            <ButtonLink href="#flavors" variant="line">
+              {dict.seeTheFlavors}
+            </ButtonLink>
           </div>
-          <p className="inline-block rounded-full bg-mint px-[0.9em] py-[0.35em] text-[0.9375rem]">{dict.freeDelivery}</p>
+          <p className="inline-block rounded-full bg-mint px-[0.9em] py-[0.35em] text-[0.9375rem]">
+            {dict.freeDelivery}
+          </p>
         </div>
         <Image
           src={heroPhoto}

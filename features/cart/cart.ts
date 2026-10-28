@@ -1,4 +1,4 @@
-import type { Box, Cart, CartItem } from "./types";
+import type { Box, Cart, CartItem } from './types';
 
 // Order doesn't matter: ['mitte', 'wedding'] and ['wedding', 'mitte'] are the same flavors.
 function hasSameFlavors(a: readonly string[], b: readonly string[]) {
@@ -19,16 +19,20 @@ function isSameLine(a: CartItem, b: CartItem): boolean {
   }
 
   // a is a box here
-  return b.type === 'box' && hasSameSize(a.box, b.box) && hasSameFlavors(a.box.flavors, b.box.flavors);
+  return (
+    b.type === 'box' && hasSameSize(a.box, b.box) && hasSameFlavors(a.box.flavors, b.box.flavors)
+  );
 }
 
 function addItem(cart: Cart, item: CartItem): Cart {
-  const lineExists = cart.some(line => isSameLine(line, item))
+  const lineExists = cart.some((line) => isSameLine(line, item));
   if (lineExists) {
-    return cart.map(line => isSameLine(line, item) ? { ...line, quantity: line.quantity + item.quantity } : line)
+    return cart.map((line) =>
+      isSameLine(line, item) ? { ...line, quantity: line.quantity + item.quantity } : line,
+    );
   }
 
-  return [...cart, {...item}]
+  return [...cart, { ...item }];
 }
 
 export { addItem, isSameLine };
