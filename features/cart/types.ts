@@ -1,4 +1,4 @@
-import { BoxSize, Product } from "../products/types"
+import type { BoxSize, Product } from "../products/types"
 
 type ProductId = Product['id']
 

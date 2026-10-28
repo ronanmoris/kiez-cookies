@@ -1,5 +1,5 @@
 import { toInteger } from "@/lib/utils";
-import { BoxContent, BoxSize, CookieSize, Product } from "./types";
+import type { BoxContent, BoxSize, CookieSize, Product } from "./types";
 
 export const boxOptions:
   Record<CookieSize, Record<BoxSize, BoxContent>> = {

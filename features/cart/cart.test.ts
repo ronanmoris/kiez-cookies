@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 import { addItem, isSameLine } from "./cart"
-import { Cart, CartItem } from "./types"
+import type { Cart, CartItem } from "./types"
 
 describe('isSameLine', () => {
 	it('should return true if the productId is the same', () => {

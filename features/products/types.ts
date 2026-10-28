@@ -1,4 +1,4 @@
-import { Integer } from "@/lib/utils";
+import type { Integer } from "@/lib/utils";
 import type { Locale } from "@/features/i18n/locales";
 
 type CookieSize = 'classic' | 'jumbo'

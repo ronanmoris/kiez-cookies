@@ -1,4 +1,4 @@
-import { Box, Cart, CartItem } from "./types";
+import type { Box, Cart, CartItem } from "./types";
 
 // Order doesn't matter: ['mitte', 'wedding'] and ['wedding', 'mitte'] are the same flavors.
 function hasSameFlavors(a: readonly string[], b: readonly string[]) {
