@@ -1,7 +1,7 @@
 import { toInteger } from '@/lib/utils';
-import type { BoxContent, BoxSize, CookieSize, Product } from './types';
+import type { BoxOptions, Product } from './types';
 
-export const boxOptions: Record<CookieSize, Record<BoxSize, BoxContent>> = {
+export const boxOptions: BoxOptions = {
   classic: {
     small: { flavorCount: 1, price: toInteger(1800), count: 6 },
     medium: { flavorCount: 2, price: toInteger(2500), count: 12 },

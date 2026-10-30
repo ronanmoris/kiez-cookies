@@ -31,6 +31,9 @@ type BoxContent = { flavorCount: 1 | 2; price: Integer; count: number };
 
 type BoxSize = 'small' | 'medium' | 'large';
 
+// Box price and content per cookie size, then per box size: boxOptions.jumbo.medium.
+type BoxOptions = Record<CookieSize, Record<BoxSize, BoxContent>>;
+
 type EUAllergen =
   | 'gluten'
   | 'crustaceans'
@@ -54,4 +57,4 @@ type CookieAllergenInfo = {
   };
 };
 
-export type { CookieSize, Product, BoxContent, BoxSize };
+export type { CookieSize, Product, BoxContent, BoxOptions, BoxSize };

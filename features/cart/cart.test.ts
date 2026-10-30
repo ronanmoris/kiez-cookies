@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { addItem, isSameLine, removeItem } from './cart';
+import type { BoxOptions, CookieSize, Product } from '@/features/products/types';
+import { toInteger } from '@/lib/utils';
+import { addItem, cartTotal, isSameLine, removeItem } from './cart';
 import type { Cart, CartItem } from './types';
 
 describe('isSameLine', () => {
@@ -325,5 +327,113 @@ describe('removeItem', () => {
     const result = removeItem(cart, lineWithOtherQuantity);
 
     expect(result).toEqual([]);
+  });
+});
+
+// Test fixtures, not the real catalog: real prices are placeholders and will change.
+function makeProduct(id: string, size: CookieSize, price: number): Product {
+  const text = { name: id, tagline: '', flavor: '', altText: '' };
+  return {
+    id,
+    size,
+    allergenInfo: 'unknown',
+    price: toInteger(price),
+    image: { url: '' },
+    availableFrozen: true,
+    text: { de: text, en: text },
+  };
+}
+
+const testCatalog: Product[] = [
+  makeProduct('classic-a', 'classic', 100),
+  makeProduct('classic-b', 'classic', 250),
+  makeProduct('jumbo-a', 'jumbo', 500),
+  makeProduct('jumbo-b', 'jumbo', 600),
+];
+
+// Box prices differ per cookie size so a test fails if the wrong size is looked up.
+const testBoxOptions: BoxOptions = {
+  classic: {
+    small: { flavorCount: 1, price: toInteger(1000), count: 6 },
+    medium: { flavorCount: 2, price: toInteger(2000), count: 12 },
+    large: { flavorCount: 2, price: toInteger(3000), count: 24 },
+  },
+  jumbo: {
+    small: { flavorCount: 1, price: toInteger(1500), count: 3 },
+    medium: { flavorCount: 2, price: toInteger(2500), count: 6 },
+    large: { flavorCount: 2, price: toInteger(3500), count: 12 },
+  },
+};
+
+describe('cartTotal', () => {
+  it('should return 0 for an empty cart', () => {
+    expect(cartTotal([], testCatalog, testBoxOptions)).toBe(0);
+  });
+
+  it('should multiply a cookie price by its quantity', () => {
+    const cart: Cart = [{ type: 'cookie', productId: 'classic-b', quantity: 3 }];
+
+    expect(cartTotal(cart, testCatalog, testBoxOptions)).toBe(750);
+  });
+
+  it('should add up several cookie lines', () => {
+    const cart: Cart = [
+      { type: 'cookie', productId: 'classic-a', quantity: 2 },
+      { type: 'cookie', productId: 'jumbo-a', quantity: 1 },
+    ];
+
+    expect(cartTotal(cart, testCatalog, testBoxOptions)).toBe(700);
+  });
+
+  it('should price a box from the box options, not from its flavors', () => {
+    const cart: Cart = [
+      { type: 'box', box: { size: 'medium', flavors: ['classic-a', 'classic-b'] }, quantity: 1 },
+    ];
+
+    expect(cartTotal(cart, testCatalog, testBoxOptions)).toBe(2000);
+  });
+
+  it('should use the jumbo box price when the flavors are jumbo cookies', () => {
+    const cart: Cart = [
+      { type: 'box', box: { size: 'medium', flavors: ['jumbo-a', 'jumbo-b'] }, quantity: 1 },
+    ];
+
+    expect(cartTotal(cart, testCatalog, testBoxOptions)).toBe(2500);
+  });
+
+  it('should multiply a box price by its quantity', () => {
+    const cart: Cart = [{ type: 'box', box: { size: 'small', flavors: ['jumbo-a'] }, quantity: 2 }];
+
+    expect(cartTotal(cart, testCatalog, testBoxOptions)).toBe(3000);
+  });
+
+  it('should add up cookie and box lines together', () => {
+    const cart: Cart = [
+      { type: 'cookie', productId: 'classic-a', quantity: 1 },
+      { type: 'box', box: { size: 'large', flavors: ['classic-a', 'classic-b'] }, quantity: 1 },
+    ];
+
+    expect(cartTotal(cart, testCatalog, testBoxOptions)).toBe(3100);
+  });
+
+  // parseCart drops unknown ids, so reaching cartTotal with one is a bug, not a customer error.
+  it('should throw when a cookie line has a product id that is not in the catalog', () => {
+    const cart: Cart = [{ type: 'cookie', productId: 'gone', quantity: 1 }];
+
+    expect(() => cartTotal(cart, testCatalog, testBoxOptions)).toThrow('gone');
+  });
+
+  it('should throw when the second flavor of a box is not in the catalog', () => {
+    const cart: Cart = [
+      { type: 'box', box: { size: 'medium', flavors: ['classic-a', 'gone'] }, quantity: 1 },
+    ];
+
+    expect(() => cartTotal(cart, testCatalog, testBoxOptions)).toThrow('gone');
+  });
+
+  it('should throw when a box flavor is not in the catalog', () => {
+    const cart: Cart = [{ type: 'box', box: { size: 'small', flavors: ['gone'] }, quantity: 1 }];
+
+    expect(() => cartTotal(cart, testCatalog, testBoxOptions)).toThrow('gone');
   });
 });
