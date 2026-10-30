@@ -7,6 +7,7 @@ function toInteger(value: number): Integer {
 
   return value as Integer;
 }
+type DistributiveOmit<T, K extends keyof T> = T extends unknown ? Omit<T, K> : never;
 
-export type { Integer };
+export type { Integer, DistributiveOmit };
 export { toInteger };

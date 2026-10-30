@@ -1,4 +1,4 @@
-import type { Box, Cart, CartItem } from './types';
+import type { Box, Cart, CartItem, LineKey } from './types';
 
 // Order doesn't matter: ['mitte', 'wedding'] and ['wedding', 'mitte'] are the same flavors.
 function hasSameFlavors(a: readonly string[], b: readonly string[]) {
@@ -13,7 +13,7 @@ function hasSameSize(a: Box, b: Box) {
 }
 
 // Quantity is not part of a line's identity: 3 × Mitte and 1 × Mitte are the same line.
-function isSameLine(a: CartItem, b: CartItem): boolean {
+function isSameLine(a: LineKey, b: LineKey): boolean {
   if (a.type === 'cookie') {
     return b.type === 'cookie' && a.productId === b.productId;
   }
@@ -35,4 +35,8 @@ function addItem(cart: Cart, item: CartItem): Cart {
   return [...cart, { ...item }];
 }
 
-export { addItem, isSameLine };
+function removeItem(cart: Cart, key: LineKey): Cart {
+  return cart.filter((line) => !isSameLine(line, key));
+}
+
+export { addItem, isSameLine, removeItem };

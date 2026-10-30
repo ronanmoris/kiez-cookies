@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { addItem, isSameLine } from './cart';
+import { addItem, isSameLine, removeItem } from './cart';
 import type { Cart, CartItem } from './types';
 
 describe('isSameLine', () => {
@@ -231,5 +231,99 @@ describe('addItem', () => {
 
     expect(result[0].quantity).toBe(3);
     expect(line.quantity).toBe(1);
+  });
+});
+
+describe('removeItem', () => {
+  it('should remove a matching cookie line', () => {
+    const lineA: CartItem = { type: 'cookie', productId: '1', quantity: 1 };
+    const lineB: CartItem = { type: 'cookie', productId: '2', quantity: 2 };
+    const cart: Cart = [lineA, lineB];
+
+    const result = removeItem(cart, lineB);
+
+    expect(result).toEqual([{ type: 'cookie', productId: '1', quantity: 1 }]);
+  });
+
+  it('should remove a box line when the flavors are given in a different order', () => {
+    const cart: Cart = [
+      { type: 'cookie', productId: '3', quantity: 1 },
+      { type: 'box', box: { size: 'medium', flavors: ['1', '2'] }, quantity: 1 },
+    ];
+
+    const result = removeItem(cart, { type: 'box', box: { size: 'medium', flavors: ['2', '1'] } });
+
+    expect(result).toEqual([{ type: 'cookie', productId: '3', quantity: 1 }]);
+  });
+
+  it('should keep a box with the same flavor when removing a cookie', () => {
+    const cart: Cart = [
+      { type: 'cookie', productId: '1', quantity: 1 },
+      { type: 'box', box: { size: 'small', flavors: ['1'] }, quantity: 1 },
+    ];
+
+    const result = removeItem(cart, { type: 'cookie', productId: '1' });
+
+    expect(result).toEqual([{ type: 'box', box: { size: 'small', flavors: ['1'] }, quantity: 1 }]);
+  });
+
+  it('should keep a cookie with the same flavor when removing a box', () => {
+    const cart: Cart = [
+      { type: 'cookie', productId: '1', quantity: 1 },
+      { type: 'box', box: { size: 'small', flavors: ['1'] }, quantity: 1 },
+    ];
+
+    const result = removeItem(cart, { type: 'box', box: { size: 'small', flavors: ['1'] } });
+
+    expect(result).toEqual([{ type: 'cookie', productId: '1', quantity: 1 }]);
+  });
+
+  it('should keep the order of the remaining lines', () => {
+    const cart: Cart = [
+      { type: 'cookie', productId: '1', quantity: 1 },
+      { type: 'cookie', productId: '2', quantity: 1 },
+      { type: 'cookie', productId: '3', quantity: 1 },
+    ];
+
+    const result = removeItem(cart, { type: 'cookie', productId: '2' });
+
+    expect(result).toEqual([
+      { type: 'cookie', productId: '1', quantity: 1 },
+      { type: 'cookie', productId: '3', quantity: 1 },
+    ]);
+  });
+
+  // filter always returns a new array, so "not found" gives an equal copy, not the same array.
+  it('should return an equal copy when the line is not in the cart', () => {
+    const cart: Cart = [{ type: 'cookie', productId: '1', quantity: 1 }];
+
+    const result = removeItem(cart, { type: 'cookie', productId: '2' });
+
+    expect(result).toEqual([{ type: 'cookie', productId: '1', quantity: 1 }]);
+    expect(result).not.toBe(cart);
+  });
+
+  it('should not mutate the original cart', () => {
+    const cart: Cart = [
+      { type: 'cookie', productId: '1', quantity: 1 },
+      { type: 'cookie', productId: '2', quantity: 1 },
+    ];
+
+    const result = removeItem(cart, { type: 'cookie', productId: '1' });
+
+    expect(result).toHaveLength(1);
+    expect(cart).toEqual([
+      { type: 'cookie', productId: '1', quantity: 1 },
+      { type: 'cookie', productId: '2', quantity: 1 },
+    ]);
+  });
+
+  it('should remove the whole line whatever quantity the key carries', () => {
+    const cart: Cart = [{ type: 'cookie', productId: '1', quantity: 3 }];
+    const lineWithOtherQuantity: CartItem = { type: 'cookie', productId: '1', quantity: 1 };
+
+    const result = removeItem(cart, lineWithOtherQuantity);
+
+    expect(result).toEqual([]);
   });
 });

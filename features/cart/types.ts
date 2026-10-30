@@ -1,3 +1,4 @@
+import type { DistributiveOmit } from '@/lib/utils';
 import type { BoxSize, Product } from '../products/types';
 
 type ProductId = Product['id'];
@@ -27,5 +28,6 @@ type CartItem =
   | ({ type: 'box'; box: Box } & CartItemBase);
 
 type Cart = CartItem[];
+type LineKey = DistributiveOmit<CartItem, 'quantity'>;
 
-export type { Box, Cart, CartItem, ProductId };
+export type { Box, Cart, CartItem, LineKey, ProductId };
