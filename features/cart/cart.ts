@@ -41,6 +41,17 @@ function removeItem(cart: Cart, key: LineKey): Cart {
   return cart.filter((line) => !isSameLine(line, key));
 }
 
+// Sets the line's quantity; 0 removes the line (the − button at 1). A line that isn't in the cart is
+// not added: that's addItem's job. Negative or fractional quantities are rejected before this
+// (Server Action), like for addItem.
+function setQuantity(cart: Cart, key: LineKey, quantity: number): Cart {
+  if (quantity === 0) {
+    return removeItem(cart, key);
+  }
+
+  return cart.map((line) => (isSameLine(line, key) ? { ...line, quantity } : line));
+}
+
 // Throws: the cart is validated against the catalog first (parseCart), so an unknown id here is a bug.
 function findProduct(catalog: readonly Product[], id: ProductId): Product {
   const product = catalog.find((p) => p.id === id);
@@ -72,4 +83,4 @@ function cartTotal(cart: Cart, catalog: readonly Product[], boxOptions: BoxOptio
   return toInteger(total);
 }
 
-export { addItem, cartTotal, isSameLine, removeItem };
+export { addItem, cartTotal, isSameLine, removeItem, setQuantity };

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { BoxOptions, CookieSize, Product } from '@/features/products/types';
 import { toInteger } from '@/lib/utils';
-import { addItem, cartTotal, isSameLine, removeItem } from './cart';
+import { addItem, cartTotal, isSameLine, removeItem, setQuantity } from './cart';
 import type { Cart, CartItem } from './types';
 
 describe('isSameLine', () => {
@@ -327,6 +327,88 @@ describe('removeItem', () => {
     const result = removeItem(cart, lineWithOtherQuantity);
 
     expect(result).toEqual([]);
+  });
+});
+
+describe('setQuantity', () => {
+  it('should set the quantity of the matching cookie line', () => {
+    const cart: Cart = [
+      { type: 'cookie', productId: '1', quantity: 1 },
+      { type: 'cookie', productId: '2', quantity: 1 },
+    ];
+
+    const result = setQuantity(cart, { type: 'cookie', productId: '2' }, 5);
+
+    expect(result).toEqual([
+      { type: 'cookie', productId: '1', quantity: 1 },
+      { type: 'cookie', productId: '2', quantity: 5 },
+    ]);
+  });
+
+  it('should set, not add: 3 set to 2 gives 2', () => {
+    const cart: Cart = [{ type: 'cookie', productId: '1', quantity: 3 }];
+
+    const result = setQuantity(cart, { type: 'cookie', productId: '1' }, 2);
+
+    expect(result).toEqual([{ type: 'cookie', productId: '1', quantity: 2 }]);
+  });
+
+  it('should set the quantity of a box line given with its flavors in a different order', () => {
+    const cart: Cart = [{ type: 'box', box: { size: 'medium', flavors: ['1', '2'] }, quantity: 1 }];
+
+    const result = setQuantity(
+      cart,
+      { type: 'box', box: { size: 'medium', flavors: ['2', '1'] } },
+      4,
+    );
+
+    expect(result).toEqual([
+      { type: 'box', box: { size: 'medium', flavors: ['1', '2'] }, quantity: 4 },
+    ]);
+  });
+
+  it('should leave a box with the same flavor alone when setting a cookie line', () => {
+    const cart: Cart = [
+      { type: 'cookie', productId: '1', quantity: 1 },
+      { type: 'box', box: { size: 'small', flavors: ['1'] }, quantity: 1 },
+    ];
+
+    const result = setQuantity(cart, { type: 'cookie', productId: '1' }, 3);
+
+    expect(result).toEqual([
+      { type: 'cookie', productId: '1', quantity: 3 },
+      { type: 'box', box: { size: 'small', flavors: ['1'] }, quantity: 1 },
+    ]);
+  });
+
+  it('should remove the line when the quantity is 0', () => {
+    const cart: Cart = [
+      { type: 'cookie', productId: '1', quantity: 1 },
+      { type: 'cookie', productId: '2', quantity: 2 },
+    ];
+
+    const result = setQuantity(cart, { type: 'cookie', productId: '2' }, 0);
+
+    expect(result).toEqual([{ type: 'cookie', productId: '1', quantity: 1 }]);
+  });
+
+  it('should not add a line that is not in the cart', () => {
+    const cart: Cart = [{ type: 'cookie', productId: '1', quantity: 1 }];
+
+    const result = setQuantity(cart, { type: 'cookie', productId: '2' }, 3);
+
+    expect(result).toEqual([{ type: 'cookie', productId: '1', quantity: 1 }]);
+  });
+
+  it('should not mutate the original cart or its lines', () => {
+    const line: CartItem = { type: 'cookie', productId: '1', quantity: 1 };
+    const cart: Cart = [line];
+
+    const result = setQuantity(cart, { type: 'cookie', productId: '1' }, 3);
+
+    expect(result).toEqual([{ type: 'cookie', productId: '1', quantity: 3 }]);
+    expect(result).not.toBe(cart);
+    expect(line.quantity).toBe(1);
   });
 });
 
