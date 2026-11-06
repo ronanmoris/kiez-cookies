@@ -30,4 +30,26 @@ type CartItem =
 type Cart = CartItem[];
 type LineKey = DistributiveOmit<CartItem, 'quantity'>;
 
-export type { Box, Cart, CartItem, LineKey, ProductId };
+// Contract of the addToCart Server Action. The request is a cart line, as the UI builds it.
+type AddToCartRequest = CartItem;
+
+type AddToCartError =
+  | 'INVALID_REQUEST' // wrong shape: missing fields, unknown type or box size, wrong flavor count
+  | 'INVALID_QUANTITY' // not a whole number from 1 to MAX_LINE_QUANTITY, also after merging
+  | 'UNKNOWN_PRODUCT' // a product id that is not in the catalog
+  | 'INVALID_BOX' // flavors not available frozen, or classic and jumbo mixed
+  | 'CART_FULL'; // the cart would no longer fit in its cookie
+
+// A discriminated union: `error` exists only when ok is false, so `if (!result.ok)` narrows it.
+type AddToCartResult = { ok: true } | { ok: false; error: AddToCartError };
+
+export type {
+  AddToCartError,
+  AddToCartRequest,
+  AddToCartResult,
+  Box,
+  Cart,
+  CartItem,
+  LineKey,
+  ProductId,
+};

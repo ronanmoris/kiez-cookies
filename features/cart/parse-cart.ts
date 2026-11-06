@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import type { Product } from '@/features/products/types';
 import { addItem } from './cart';
-import type { Box, Cart, CartItem } from './types';
+import type { Cart, CartItem } from './types';
 
 // Placeholder until Michèle sets a real limit. Stops a hand-edited cookie from ordering 1e9 cookies.
 const MAX_LINE_QUANTITY = 99;
@@ -23,21 +23,24 @@ const lineSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('box'), box: boxSchema, quantity: quantitySchema }),
 ]) satisfies z.ZodType<CartItem>;
 
+type CatalogProblem = 'UNKNOWN_PRODUCT' | 'INVALID_BOX';
+
 // The rules the shape can't express: ids must exist, and a box needs frozen flavors of one cookie size.
 // Two identical flavors in a box are allowed for now (open question for Michèle).
-function isBoxAvailable(box: Box, catalog: readonly Product[]): boolean {
-  const products = box.flavors.map((id) => catalog.find((p) => p.id === id));
-  const sizes = new Set(products.map((p) => p?.size));
-
-  return products.every((p) => p?.availableFrozen === true) && sizes.size === 1;
-}
-
-function isInCatalog(line: CartItem, catalog: readonly Product[]): boolean {
+function findCatalogProblem(
+  line: CartItem,
+  catalog: readonly Product[],
+): CatalogProblem | undefined {
   if (line.type === 'cookie') {
-    return catalog.some((p) => p.id === line.productId);
+    return catalog.some((p) => p.id === line.productId) ? undefined : 'UNKNOWN_PRODUCT';
   }
 
-  return isBoxAvailable(line.box, catalog);
+  const products = line.box.flavors.map((id) => catalog.find((p) => p.id === id));
+  if (products.includes(undefined)) return 'UNKNOWN_PRODUCT';
+
+  const sizes = new Set(products.map((p) => p?.size));
+  const allFrozen = products.every((p) => p?.availableFrozen === true);
+  return allFrozen && sizes.size === 1 ? undefined : 'INVALID_BOX';
 }
 
 function readJson(raw: string): unknown {
@@ -61,7 +64,7 @@ function parseCart(raw: string | undefined, catalog: readonly Product[]): Cart {
 
   const validLines = lines.data.flatMap((value) => {
     const line = lineSchema.safeParse(value);
-    return line.success && isInCatalog(line.data, catalog) ? [line.data] : [];
+    return line.success && !findCatalogProblem(line.data, catalog) ? [line.data] : [];
   });
 
   return validLines
@@ -69,4 +72,10 @@ function parseCart(raw: string | undefined, catalog: readonly Product[]): Cart {
     .map((line) => ({ ...line, quantity: Math.min(line.quantity, MAX_LINE_QUANTITY) }));
 }
 
-export { MAX_LINE_QUANTITY, parseCart };
+// The inverse of parseCart.
+function serializeCart(cart: Cart): string {
+  return JSON.stringify(cart);
+}
+
+export type { CatalogProblem };
+export { MAX_LINE_QUANTITY, findCatalogProblem, lineSchema, parseCart, serializeCart };

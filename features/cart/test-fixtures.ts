@@ -37,4 +37,4 @@ const testBoxOptions: BoxOptions = {
   },
 };
 
-export { testBoxOptions, testCatalog };
+export { makeProduct, testBoxOptions, testCatalog };
